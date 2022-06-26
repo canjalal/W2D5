@@ -49,14 +49,14 @@ class List
     end
 
     def print
-        puts "--------------------------------------------------------------------------------"
+        puts "----------------------------------------------------------------------------------------"
         puts @label
-        puts "--------------------------------------------------------------------------------"
-        puts "Index | Item                                                       |  Deadline  "
-        puts "--------------------------------------------------------------------------------"
+        puts "----------------------------------------------------------------------------------------"
+        puts "Index | Item                                                       |  Deadline  | Done? "
+        puts "----------------------------------------------------------------------------------------"
         @items.each.with_index do |item, idx|
-            puts "#{idx.to_s.rjust(5)} | #{item.title.ljust(58)} | #{item.deadline.rjust(10)}"
-            puts "--------------------------------------------------------------------------------"
+            puts "#{idx.to_s.rjust(5)} | #{item.title.ljust(58)} | #{item.deadline.rjust(10)} |   #{item.isDone ? "Y" : "N"} "
+            puts "----------------------------------------------------------------------------------------"
         end
         return "\n"
     end
@@ -66,6 +66,7 @@ class List
             puts "--------------------------------------------------------------------------------"
             puts "#{(self[index].title + " : ").ljust(40)} #{self[index].deadline.rjust(38)}"
             puts self[index].description
+            puts "This item item #{self[index].isDone ? "is" : "ISN\'T"} DONE"
             puts "--------------------------------------------------------------------------------" 
         end
 
@@ -110,6 +111,31 @@ class List
     def sort_by_date!
         @items.sort_by! {|item| item.deadline}
         true
+    end
+
+    def toggle_item(index)
+        if(self.valid_index?(index))
+            @items[index].toggle
+            true
+        else
+            false
+        end
+    end
+
+    # need to test these 6/24/2022
+
+    def remove_item(index)
+        if(self.valid_index?(index))
+            @items.delete_at(index)
+            true
+        else
+            false
+        end
+
+    end
+
+    def purge
+        @items.delete_if {|item| item.isDone}
     end
 
     

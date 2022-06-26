@@ -1,6 +1,6 @@
 class Item
     attr_accessor :title, :description
-    attr_reader :deadline
+    attr_reader :deadline, :isDone
     def self.valid_date?(date_string)
         return date_string.match?(/^((?:1|2)\d{3})-(0[1-9]|1[0-2])-(0[1-9]|(?:1|2)[0-9]|3[0-1])/)
 
@@ -12,6 +12,8 @@ class Item
                                     # this is the method and not the local variable
         @description = description
 
+        @isDone = false
+
     end
 
     def deadline=(new_deadline)
@@ -19,6 +21,10 @@ class Item
             raise RuntimeError.new("Date must be in the format of YYYY-MM-DD")
         end
         @deadline = new_deadline
+    end
+
+    def toggle
+        @isDone = !@isDone
     end
 
 

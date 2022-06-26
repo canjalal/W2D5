@@ -34,7 +34,7 @@ Welcome to the ToDoBoard! Enter a command.
 ------------------------------------------
 
 mktodo <title> <deadline> <optional description>
-- makes a todo with the given information
+- makes a todo with the given information. Multi-word titles must be enclosed in \" \".
 
 up <index> <optional amount>
 - raises the todo up the list
@@ -55,6 +55,15 @@ print <optional index>
 - prints all todos if no index is provided
 - prints full information of the specified todo if an index is provided
 
+toggle <index>
+- Flips state of item's doneness between Done and Not Done
+
+purge
+- Delete all items that are marked as Done
+
+rm <index>
+- Removes item at index
+
 quit
 - returns false
         """
@@ -64,7 +73,7 @@ quit
 
         userinput = gets.chomp
 
-        usermatch = userinput.match(/^([a-z]+)(?:\s(\S+))?(?:\s(\S+))?(?:\s(.*+))?$/)
+        usermatch = userinput.match(/^([a-z]+)(?:\s([^"]\S*|\"[^"]+\"))?(?:\s(\S+))?(?:\s(.*))?$/)
 
         raise RuntimeError.new("Invalid command!") if(!usermatch)
 
@@ -121,6 +130,21 @@ quit
             else
                 @lista.print
             end
+        when 'toggle'
+            @lista.toggle_item(usermatch[2].to_i)
+
+        when 'rm'
+            begin
+                index = usermatch[2].to_i
+
+            rescue
+                "Oops invalid arguments for rm"
+            else
+                @lista.remove_item(index)
+            end
+
+        when 'purge'
+            @lista.purge
 
         when 'quit'
 
