@@ -82,6 +82,11 @@ Enter a command!
         userinput = gets.chomp
 
         usermatch = userinput.match(/^([a-z]+)(?:\s([^"]\S*|\"[^"]+\"))?(?:\s([^"]\S*|\"[^"]+\"))?(?:\s(\S+))?(?:\s(.*))?$/)
+# usermatch[1]: the command
+# usermatch[2]: the label for the list, may be multiple words surrounded by quotes
+# usermatch[3]: optional command 1, may be multiple words surrounded by quotes, or just a number in string format
+# usermatch[4]: optional command 2, may be a string or number
+# usermatch[5]: optional command 3, may be a number, or multi-word string not surrounded by quotes
 
         raise RuntimeError.new("Invalid command!") if(!usermatch)
 
